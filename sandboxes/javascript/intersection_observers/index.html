@@ -201,23 +201,21 @@
     var element2 = document.getElementById('2');
     var element3 = document.getElementById('3');
     var element4 = document.getElementById('4');
-
+    var body = document.querySelector('body');
     var elementsToReveal = [element1, element2, element3, element4];
     var revealedElements = [];
 
-    function isElementVisible(element) {
-      if (window.pageYOffset >= element.offsetTop) {
-        shouldRevealElement();
-      } else {
-        console.log('Element is not visible');
-      }
-    }
-
-    function shouldRevealElement(element) {
-      if (!revealedElements.includes(element)) {
-        revealElement(element);
-        revealedElements.unshift(element);
-      }
+    function isElementVisible(elementsToReveal) {
+      elementsToReveal.map(element => {
+        if (window.pageYOffset >= element.offsetTop) {
+          if (!revealedElements.includes(element)) {
+            revealElement(element);
+            revealedElements.unshift(element);
+          }
+        } else {
+          console.log('Element is not visible');
+        }
+      })
     }
 
     function revealElement(element) {
@@ -226,7 +224,7 @@
       const props = {
         visible: {
           opacity: 1,
-          transition: { duration: 2750 }
+          transition: { duration: 1500 }
         },
         hidden: { opacity: 0 },
         initialPose: "hidden"
@@ -239,7 +237,13 @@
       console.log('Revealing');
     }
 
-    window.addEventListener("scroll", isElementVisible(element1));
+    window.addEventListener("load", function () {
+      isElementVisible(elementsToReveal)
+    });
+
+    window.addEventListener("scroll", function () {
+      isElementVisible(elementsToReveal)
+    });
 
   </script>
 
