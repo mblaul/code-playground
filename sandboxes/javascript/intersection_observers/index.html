@@ -196,18 +196,23 @@
   <script src="./index_files/ie10-viewport-bug-workaround.js.download"></script>
   <script src="https://unpkg.com/popmotion-pose/dist/popmotion-pose.js"></script>
   <script>
+    window.scrollBy(0, 10);
 
     var element1 = document.getElementById('1');
     var element2 = document.getElementById('2');
     var element3 = document.getElementById('3');
     var element4 = document.getElementById('4');
-    var body = document.querySelector('body');
+
     var elementsToReveal = [element1, element2, element3, element4];
-    var revealedElements = [];
 
     function isElementVisible(elementsToReveal) {
+      console.log(elementsToReveal);
+
+
       elementsToReveal.map(element => {
-        if (window.pageYOffset >= (window.pageYOffset - element.offsetTop)) {
+        console.log('page y offset: ' + (pageYOffset - 100));
+        console.log('element' + element + ' top : ' + element.offsetTop);
+        if ((window.pageYOffset + 600) >= element.offsetTop) {
 
           if (elementsToReveal.includes(element)) {
             console.log('Revealing ' + element)
@@ -227,7 +232,7 @@
       const props = {
         visible: {
           opacity: 1,
-          transition: { duration: 1500 }
+          transition: { duration: 1000 }
         },
         hidden: { opacity: 0 },
         initialPose: "hidden"
@@ -238,13 +243,9 @@
       poser.set(isVisible ? "hidden" : "visible");
     }
 
-    window.addEventListener("load", function () {
-      isElementVisible(elementsToReveal)
-    });
+    window.addEventListener("load", function () { isElementVisible(elementsToReveal) });
 
-    window.addEventListener("scroll", function () {
-      isElementVisible(elementsToReveal)
-    });
+    window.addEventListener("scroll", function () { isElementVisible(elementsToReveal) });
 
   </script>
 
