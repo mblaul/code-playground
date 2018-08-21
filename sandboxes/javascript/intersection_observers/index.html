@@ -207,10 +207,13 @@
 
     function isElementVisible(elementsToReveal) {
       elementsToReveal.map(element => {
-        if (window.pageYOffset >= element.offsetTop) {
-          if (!revealedElements.includes(element)) {
+        if (window.pageYOffset >= (window.pageYOffset - element.offsetTop)) {
+
+          if (elementsToReveal.includes(element)) {
+            console.log('Revealing ' + element)
             revealElement(element);
-            revealedElements.unshift(element);
+            var removeIndex = elementsToReveal.indexOf(element);
+            elementsToReveal.splice(removeIndex, 1);
           }
         } else {
           console.log('Element is not visible');
@@ -233,8 +236,6 @@
       let isVisible = false;
       const poser = pose(box, props);
       poser.set(isVisible ? "hidden" : "visible");
-
-      console.log('Revealing');
     }
 
     window.addEventListener("load", function () {
